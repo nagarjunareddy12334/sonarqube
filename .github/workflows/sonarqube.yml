@@ -67,10 +67,10 @@ jobs:
                   -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             #step 6 : sonarqube quality gate check
             - name: SonarQube Quality Gate Check
-              uses: sonarsource/sonarqube-quality-gate-action@v1.0 
+              uses: sonarsource/sonarqube-quality-gate-action@v1.2.0
               timeout-minutes: 10
               with:
                 SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
                 SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} 
-                
+
 
