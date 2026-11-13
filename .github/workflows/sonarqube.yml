@@ -63,7 +63,7 @@ jobs:
                   -Dsonar.sources=src
                   -Dsonar.tests=tests
                   -Dsonar.test.inclusions=tests/**/*.test.js
-                  -Dsonar.testExecutionReportPaths=coverage/test-report.xml
+                  -Dsonar.ExecutionReportPaths=coverage/test-report.xml
                   -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             #step 6 : sonarqube quality gate check
             - name: SonarQube Quality Gate Check
