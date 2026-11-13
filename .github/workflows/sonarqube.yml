@@ -61,8 +61,8 @@ jobs:
                   -Dsonar.projectKey=sonarqube
                   -Dsonar.projectName="sonarqube"
                   -Dsonar.sources=src
-                  -Dsonar.tests=src
-                  -Dsonar.test.inclusions=src/**/*.spec.js
+                  -Dsonar.tests=tests
+                  -Dsonar.test.inclusions=tests/**/*.test.js
                   -Dsonar.testExecutionReportPaths=coverage/test-report.xml
                   -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             #step 6 : sonarqube quality gate check
