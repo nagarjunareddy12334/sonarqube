@@ -51,15 +51,15 @@ jobs:
                 name: test-results  
                 path : coverage
             #step 5 : run sonarqube analysis
-            - name: Run SonarQube analysis
-              uses: sonarsource/sonarqube-scan-action@v8.3.0
+            - name: Run Sonarqube analysis
+              uses: SonarSource/sonarqube-scan-action@v8.3.0
               env:
                 SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
                 SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
               with:
                 arguments: >
                   -Dsonar.projectKey=sonarqube
-                  -Dsonar.projectName=sonarqube
+                  -Dsonar.projectName="sonarqube"
                   -Dsonar .sources=src
                   -Dsonar.tests=src
                   -Dsonar.test.inclusions=src/**/*.spec.js
