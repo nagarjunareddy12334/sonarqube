@@ -57,7 +57,7 @@ jobs:
                 SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
                 SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
               with:
-                arguments: >
+                args: >
                   -Dsonar.projectKey=sonarqube
                   -Dsonar.projectName="sonarqube"
                   -Dsonar .sources=src
