@@ -60,7 +60,7 @@ jobs:
                 args: >
                   -Dsonar.projectKey=sonarqube
                   -Dsonar.projectName="sonarqube"
-                  -Dsonar .sources=src
+                  -Dsonar.sources=src
                   -Dsonar.tests=src
                   -Dsonar.test.inclusions=src/**/*.spec.js
                   -Dsonar.testExecutionReportPaths=coverage/test-report.xml
