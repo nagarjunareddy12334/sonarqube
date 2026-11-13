@@ -1,0 +1,76 @@
+name : sonarqube analysis
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+jobs:
+    
+    unit_testing:
+       name: unit_testing
+       runs-on: ubuntu-latest
+       steps:
+            #step 1: Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v4
+            #step 2 : setup node 
+            - name: Set up Node environment
+              uses: actions/setup-node@v4
+            #step 3 : install dependencies
+            - name: Install dependencies
+              run: npm install
+            #step 4 : run unit tests
+            - name: Run unit tests
+              run: npm test    
+            #step 5 : upload test results
+            - name: Upload test results
+              uses: actions/upload-artifact@v4
+              with:
+                name: test-results  
+                path: coverage
+                retention-days: 5
+                if-no-files-found: error
+    sonarqube_analysis:
+        name: sonarqube_analysis
+        runs-on: ubuntu-latest
+        needs: unit_testing
+        steps:
+            #step 1: Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v4
+            #step 2 : setup node 
+            - name: Set up Node environment
+              uses: actions/setup-node@v4
+            #step 3 : install dependencies
+            - name: Install dependencies
+              run: npm install
+            #step 4 : dwonload test results
+            - name: Download test results
+              uses: actions/download-artifact@v4
+              with:
+                name: test-results  
+                path : coverage
+            #step 5 : run sonarqube analysis
+            - name: Run SonarQube analysis
+              uses: sonarsource/sonarqube-scan-action@v8.3.0
+              env:
+                SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
+                SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+              with:
+                arguments: >
+                  -Dsonar.projectKey=sonarqube
+                  -Dsonar.projectName=sonarqube
+                  -Dsonar .sources=src
+                  -Dsonar.tests=src
+                  -Dsonar.test.inclusions=src/**/*.spec.js
+                  -Dsonar.testExecutionReportPaths=coverage/test-report.xml
+                  -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            #step 6 : sonarqube quality gate check
+            - name: SonarQube Quality Gate Check
+              uses: sonarsource/sonarqube-quality-gate-action@v1.0 
+              timeout-minutes: 10
+              with:
+                SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
+                SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} 
+                
+
